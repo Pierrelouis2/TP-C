@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+
+
+int main(){
+    //on initialise les tableaux nom prenom ...
+	char  prenom[5][30] = {"Adrein", "Pierre", "Louis", "Martin", "Hugues"};
+    char  nom[5][30] = {"Dalb", "Tlp", "Telep", "Cov", "Fart"};
+    char  rue[5][30] = {"Blv", "rue", "chm", "imp", "rocade"};
+    char  ville[5][30] = {"lille", "Lyon", "marseille", "paris", "charbo"};
+    short notes[5][2] = {{12,10}, {12,10}, {12,10}, {12,10}, {12,10}};
+
+	for(int i=0; i<5;i++){ //on affiche chaque nom prenom ... a chaque ligne
+	printf("Prenoms : %s, Nom : %s, rue : %s, Ville : %s, Notes 1: %hu, Notes 2 : %hu\n", prenom[i],nom[i],rue[i],ville[i],notes[i][0],notes[i][1]);
+	
+	}
+return 0;
+}
