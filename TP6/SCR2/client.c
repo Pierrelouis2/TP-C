@@ -9,11 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <dirent.h>
 #include<math.h>
+#include<stdbool.h>
 #include <arpa/inet.h>
 #include "client.h"
 
@@ -31,6 +33,48 @@ int envoie_message(int socketfd, char *data){
     }
   return(EXIT_SUCCESS);
 }
+
+int lire_fichier(char * nom ){
+  int bool_code = 0;
+  
+  
+	char content[1000];
+	int fd,count,size;
+	
+	fd = open(nom, O_RDONLY);
+	size = read(fd,content,1000);
+	for(count = 0; count < size; count ++){
+    if (content[count] == '{'){
+      char cmd1 = content[count+1];
+      char cmd2 = content[count+2];
+      
+      char *token1 = strtok(cmd1, ":");
+      char *token2 = strtok(cmd2, ":");
+
+      while(token1 != NULL){
+        if(token1 == "mesage"){
+          bool_code = 1;
+        }
+        elseif(token1 == "calcule"){
+          bool_code = 2;
+        }
+      }
+
+      while(token2 != NULL){
+        if(bool_code == 1){
+          char *msg = token2;
+        }
+        if(bool_code == 2){
+          char *msg = token2;
+        }
+      }
+		printf("%c",msg);
+	  }
+  }
+	close(fd);
+	return 0;
+}
+
 
 int envoie_recois_message(int socketfd){
   char data[1024];
@@ -51,6 +95,15 @@ int envoie_recois_message(int socketfd){
 
   if (strcmp(code, "message:") == 0) envoie_message(socketfd, data);
   if (strcmp(code, "calcule:") == 0) envoie_message(socketfd, data);
+
+  //TP6 --------------------------------------------
+
+
+
+
+
+
+  //fin TP6 --------------------------------------------
 
   // la réinitialisation de l'ensemble des données
   memset(data, 0, sizeof(data));
@@ -93,6 +146,7 @@ int main(){
   }
 
   // appeler la fonction pour envoyer un message au serveur
+  lire_fichier("cmd.json");
   envoie_recois_message(socketfd);
 
   close(socketfd);
